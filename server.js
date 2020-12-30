@@ -39,3 +39,20 @@ async function startPrompts() {
 }
 
 
+async function addPrompts() {
+    let addPrompt = await inquirer.prompt({
+        name: "adds",
+        type: "list",
+        message: "What do you wish to add?",
+        choices: ["Employee", "Department", "Role", "Back"]
+    });
+    if (addPrompt.adds === "Employee") {
+        addEmployee();
+    } else if (addPrompt.adds === "Department") {
+        addDepartment();
+    } else if (addPrompt.adds === "Role") {
+        addRole();
+    } else {
+        startPrompts();
+    }
+}
