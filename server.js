@@ -94,3 +94,22 @@ async function updatePrompts() {
         startPrompts();
     }
 }
+
+
+async function removePrompts() {
+    let removePrompt  = await inquirer.prompt({
+        name: "removes",
+        type: "list",
+        message: "What do you wish to remove?",
+        choices: ["Employee", "Department", "Role", "Back"],
+    });
+    if (removePrompt.removes === "Employee") {
+        removeEmployee();
+    } else if (removePrompt.removes === "Department") {
+        removeDepartment();
+    } else if (removePrompt.removes === "Role") {
+        removeRole();
+    } else {
+        startPrompts();
+    }
+}
