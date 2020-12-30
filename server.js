@@ -56,3 +56,41 @@ async function addPrompts() {
         startPrompts();
     }
 }
+
+
+async function viewPrompts() {
+    let viewPrompt = await inquirer.prompt({
+        name: "views",
+        type: "list",
+        message: "What do you wish to view?",
+        choices: ["Employee", "Department", "Role", "Back"],
+    });
+    if (viewPrompt.views === "Employee") {
+        viewEmployee();
+    } else if (viewPrompt.views === "Department") {
+        viewDepartment();
+    } else if (viewPrompt.views === "Role") {
+        viewRole();
+    } else {
+        startPrompts();
+    }
+}
+
+
+async function updatePrompts() {
+    let updatePrompt = await inquirer.prompt({
+        name: "updates",
+        type: "list",
+        message: "What do you wish to update?",
+        choices: ["Employee", "Department", "Role", "Back"],
+    });
+    if (updatePrompt.updates === "Employee") {
+        updateEmployee();
+    } else if (updatePrompt.updates === "Department") {
+        updateDepartment();
+    } else if (updatePrompt.updates === "Role") {
+        updateRole();
+    } else {
+        startPrompts();
+    }
+}
