@@ -218,4 +218,82 @@ function addEmployee() {
 }
 
 
+function viewRole() {
+    connection.query("SELECT * FROM roles_tbl", function (err, res) {
+        if (err) throw err;
+        console.log("");
+        console.table(res);
+        startPrompts();
+    });
+}
+
+function viewDepartment() {
+    connection.query("SELECT * FROM departments_tbl", function (err, res) {
+        if (err) throw err;
+        console.log("");
+        console.table(res);
+        startPrompts();
+    });
+}
+
+function viewEmployee() {
+    connection.query("SELECT * FROM employees_tbl", function (err, res) {
+        if (err) throw err;
+        console.log("");
+        console.table(res);
+        startPrompts();
+    });
+}
+
+
+function updateRole() {
+    connection.query("SELECT * FROM roles_tbl", (err, res) => {
+        if (err) throw err;
+        console.log("");
+        console.table(res); 
+        console.log("");
+        inquirer
+        .prompt([
+            {
+                name: "roleId",
+                type: "input",
+                message: "Enter Role ID to update",
+            },
+            {
+                name: "role",
+                type: "input",
+                message: "Name of updated role",
+            },
+            {
+                name: "deptId",
+                type: "input",
+                message: "Updated department ID",
+            },
+            {
+                name: "salary",
+                type: "input",
+                message: "Updated salary for role",
+            },
+        ])
+        .then((data) => {
+            connection.query(
+                "UPDATE roles_tbl SET ? WHERE ?",
+                [
+                    {
+                        title: data.role,
+                        department_id: data.deptId,
+                        salary: data.salary,
+                    },
+                    { id: data.roleId },
+                ],
+                (err, res) => {
+                    if (err) throw err;
+                    console.log("Role successfully updated!");
+                    startPrompts();
+                }
+            );
+        });
+    });
+}
+
 
