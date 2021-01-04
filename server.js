@@ -296,4 +296,99 @@ function updateRole() {
     });
 }
 
+function updateDepartment() {
+    connection.query("SELECT * FROM departments_tbl", (err, res) => {
+        if (err) throw err;
+        console.log("");
+        console.table(res);
+        console.log("");
+        inquirer
+        .prompt([
+            {
+                name: "deptId",
+                type: "input",
+                message: "Enter department ID to update",
+            },
+            {
+                name: "dept",
+                type: "input",
+                message: "Name of Updated Department",
+            },
+        ])
+        .then((data) => {
+            connection.query(
+                "UPDATE departments_tbl SET ? WHERE?",
+                [
+                    {
+                        department_name: data.dept
+                    },
+                    { id: data.deptId },
+                ],
+                (err, res) => {
+                    if (err) throw err;
+                    console.log("Department successfully updated!");
+                    startPrompts();
+                }
+            );
+        });
+    });
+}
 
+function updateEmployee() {
+    connection.query("SELECT * FROM employees_tbl", (err, res) => {
+      if (err) throw err;
+      console.log("");
+      console.table(res);
+      console.log("");
+      inquirer
+        .prompt([
+          {
+            name: "empId",
+            type: "input",
+            message: "Enter Employee ID to update"
+          },
+          {
+            name: "firstName",
+            type: "input",
+            message: "First name of updated employee"
+          },
+          {
+            name: "lastName",
+            type: "input",
+            message: "Last name of updated employee"
+          },
+          {
+            name: "roleId",
+            type: "input",
+            message: "Updated role ID for employee"
+          },
+          {
+            name: "managerId",
+            type: "input",
+            message: "Updated manager ID for employee"
+          }
+        ])
+        .then((data) => {
+          connection.query(
+            "UPDATE employees_tbl SET ? WHERE ?",
+            [
+              {
+                first_name: data.firstName,
+                last_name: data.lastName,
+                role_id: data.roleId,
+                manager_id: data.managerId
+              },
+              { id: data.empId },
+            ],
+            (err, res) => {
+              if (err) throw err;
+              console.log("Employee successfully updated");
+              startPrompts();
+            }
+          );
+        });
+    });
+  }
+
+
+  
