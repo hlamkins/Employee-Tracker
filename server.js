@@ -113,3 +113,65 @@ async function removePrompts() {
         startPrompts();
     }
 }
+
+
+function addRole() {
+    inquirer
+    .prompt([
+        {
+            name: "role",
+            type: "input",
+            message: "Name of new role",
+        },
+        {
+            name: "deptId",
+            type: "input",
+            message: "Input department ID",
+        },
+        {
+            name: "salary",
+            type: "input",
+            message: "Salary for Role",
+        },
+    ])
+    .then((data) => {
+        connection.query(
+            "INSERT INTO roles_tbl SET ?",
+            {
+                title: data.role,
+                salary: data.salary,
+                department_id: data.deptId,
+            }
+            function (err) {
+                if (err) throw err;
+                console.log("New Role was Created!");
+                startPrompts();
+            }
+        );
+    });
+}
+
+function addDepartment() {
+    inquirer
+    .prompt([
+        {
+            name: "dept",
+            type: "input",
+            message: "Name of new department",
+        }, 
+    ])
+    .then((data) => {
+        connection.query(
+            "INSERT INTO departments_tbl SET ?",
+            {
+                department_name: data.dept,
+            },
+            function (err) {
+                if (err) throw err;
+                console.log("New Department was Created!");
+                startPrompts();
+            }
+        );
+    });
+}
+
