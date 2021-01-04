@@ -175,3 +175,47 @@ function addDepartment() {
     });
 }
 
+function addEmployee() {
+    inquirer
+    .prompt([
+        {
+            name: "firstName",
+            type: "input",
+            message: "New employee's first name",
+        },
+        {
+            name: "lastName",
+            type: "input",
+            message: "New employee's last name",
+        },
+        {
+            name: "roleId",
+            type: "input",
+            message: "New employee's role ID",
+        },
+        {
+            name: "managerId",
+            type: "input",
+            message: "New employee's manager ID",
+        },
+    ])
+    .then((data) => {
+        connection.query(
+            "INSERT INTO employees_tbl SET ?",
+            {
+                first_name: data.firstName,
+                last_name: data.lastName,
+                role_id: data.roleId,
+                manager_id: data.managerID,
+            },
+            function (err) {
+                if (err) throw err;
+                console.log("New Employee was Created!");
+                startPrompts();
+            }
+        );
+    });
+}
+
+
+
