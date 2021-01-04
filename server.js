@@ -391,4 +391,87 @@ function updateEmployee() {
   }
 
 
-  
+function removeRole() {
+    connection.query("SELECT * FROM roles_tbl", (err, res) => {
+        if (err) throw err;
+        console.log("");
+        console.table(res);
+        console.log("");
+        inquirer
+        .prompt([
+            {
+                name: "removeRole",
+                type: "input",
+                message: "Enter Role ID to remove",
+            },
+        ])
+        .then((data) => {
+            connection.query(
+                "DELETE FROM roles_tbl WHERE ?",
+                { id: data.removeRole },
+                (err, res) => {
+                    if (err) throw err;
+                    console.log("Role successfully deleted!");
+                    startPrompts();
+                }
+            );
+        });
+    });
+} 
+
+function removeDepartment() {
+    connection.query("SELECT * FROM departments_tbl", (err, res) => {
+        if (err) throw err;
+        console.log("");
+        console.table(res);
+        console.log("");
+        inquirer
+        .prompt([
+            {
+                name: "removeDept",
+                type: "input",
+                message: "Enter department ID to remove",
+            },
+        ])
+        .then((data) => {
+            connection.query(
+                "DELETE FROM departments_tbl WHERE ?",
+                { id: data.removeDept },
+                (err, res) => {
+                    if (err) throw err;
+                    console.log("Department successfully deleted");
+                    startPrompts();
+                }
+            );
+        });
+    });
+}
+
+function removeEmployee() {
+    connection.query("SELECT * FROM employees_tbl", (err, res) => {
+        if (err) throw err;
+        console.log("");
+        console.table(res);
+        console.log("");
+        inquirer
+        .prompt([
+            {
+                name: "removeEmp",
+                type: "input",
+                message: "Enter Employee ID to remove",
+            },
+        ])
+        .then((data) => {
+            connection.query(
+                "DELETE FROM employees_tbl WHERE ?",
+                { id: data.removeEmp },
+                (err, res) => {
+                    if (err) throw err;
+                    console.log("Employee successfully deleted");
+                    startPrompts();
+                }
+            );
+        });
+    });
+}
+
