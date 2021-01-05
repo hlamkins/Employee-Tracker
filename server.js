@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     port: 3306,
     user: "root",
     password: "vegetable",
-    database: "employee_tracker_db",
+    database: "company_DB",
 });
 
 connection.connect((err) => {
@@ -136,12 +136,12 @@ function addRole() {
     ])
     .then((data) => {
         connection.query(
-            "INSERT INTO roles_tbl SET ?",
+            "INSERT INTO roles SET ?",
             {
                 title: data.role,
                 salary: data.salary,
                 department_id: data.deptId,
-            }
+            },
             function (err) {
                 if (err) throw err;
                 console.log("New Role was Created!");
@@ -162,7 +162,7 @@ function addDepartment() {
     ])
     .then((data) => {
         connection.query(
-            "INSERT INTO departments_tbl SET ?",
+            "INSERT INTO departments SET ?",
             {
                 department_name: data.dept,
             },
@@ -201,12 +201,12 @@ function addEmployee() {
     ])
     .then((data) => {
         connection.query(
-            "INSERT INTO employees_tbl SET ?",
+            "INSERT INTO employees SET ?",
             {
                 first_name: data.firstName,
                 last_name: data.lastName,
                 role_id: data.roleId,
-                manager_id: data.managerID,
+                manager_id: data.managerId,
             },
             function (err) {
                 if (err) throw err;
@@ -219,7 +219,7 @@ function addEmployee() {
 
 
 function viewRole() {
-    connection.query("SELECT * FROM roles_tbl", function (err, res) {
+    connection.query("SELECT * FROM roles", function (err, res) {
         if (err) throw err;
         console.log("");
         console.table(res);
@@ -228,7 +228,7 @@ function viewRole() {
 }
 
 function viewDepartment() {
-    connection.query("SELECT * FROM departments_tbl", function (err, res) {
+    connection.query("SELECT * FROM departments", function (err, res) {
         if (err) throw err;
         console.log("");
         console.table(res);
@@ -237,7 +237,7 @@ function viewDepartment() {
 }
 
 function viewEmployee() {
-    connection.query("SELECT * FROM employees_tbl", function (err, res) {
+    connection.query("SELECT * FROM employees", function (err, res) {
         if (err) throw err;
         console.log("");
         console.table(res);
@@ -247,7 +247,7 @@ function viewEmployee() {
 
 
 function updateRole() {
-    connection.query("SELECT * FROM roles_tbl", (err, res) => {
+    connection.query("SELECT * FROM roles", (err, res) => {
         if (err) throw err;
         console.log("");
         console.table(res); 
@@ -277,7 +277,7 @@ function updateRole() {
         ])
         .then((data) => {
             connection.query(
-                "UPDATE roles_tbl SET ? WHERE ?",
+                "UPDATE roles SET ? WHERE ?",
                 [
                     {
                         title: data.role,
@@ -297,7 +297,7 @@ function updateRole() {
 }
 
 function updateDepartment() {
-    connection.query("SELECT * FROM departments_tbl", (err, res) => {
+    connection.query("SELECT * FROM departments", (err, res) => {
         if (err) throw err;
         console.log("");
         console.table(res);
@@ -317,7 +317,7 @@ function updateDepartment() {
         ])
         .then((data) => {
             connection.query(
-                "UPDATE departments_tbl SET ? WHERE?",
+                "UPDATE departments SET ? WHERE?",
                 [
                     {
                         department_name: data.dept
@@ -335,7 +335,7 @@ function updateDepartment() {
 }
 
 function updateEmployee() {
-    connection.query("SELECT * FROM employees_tbl", (err, res) => {
+    connection.query("SELECT * FROM employees", (err, res) => {
       if (err) throw err;
       console.log("");
       console.table(res);
@@ -370,13 +370,13 @@ function updateEmployee() {
         ])
         .then((data) => {
           connection.query(
-            "UPDATE employees_tbl SET ? WHERE ?",
+            "UPDATE employees SET ? WHERE ?",
             [
               {
                 first_name: data.firstName,
                 last_name: data.lastName,
                 role_id: data.roleId,
-                manager_id: data.managerId
+                manager_id: data.managerId,
               },
               { id: data.empId },
             ],
@@ -392,7 +392,7 @@ function updateEmployee() {
 
 
 function removeRole() {
-    connection.query("SELECT * FROM roles_tbl", (err, res) => {
+    connection.query("SELECT * FROM roles", (err, res) => {
         if (err) throw err;
         console.log("");
         console.table(res);
@@ -407,7 +407,7 @@ function removeRole() {
         ])
         .then((data) => {
             connection.query(
-                "DELETE FROM roles_tbl WHERE ?",
+                "DELETE FROM roles WHERE ?",
                 { id: data.removeRole },
                 (err, res) => {
                     if (err) throw err;
@@ -420,7 +420,7 @@ function removeRole() {
 } 
 
 function removeDepartment() {
-    connection.query("SELECT * FROM departments_tbl", (err, res) => {
+    connection.query("SELECT * FROM departments", (err, res) => {
         if (err) throw err;
         console.log("");
         console.table(res);
@@ -435,7 +435,7 @@ function removeDepartment() {
         ])
         .then((data) => {
             connection.query(
-                "DELETE FROM departments_tbl WHERE ?",
+                "DELETE FROM departments WHERE ?",
                 { id: data.removeDept },
                 (err, res) => {
                     if (err) throw err;
@@ -448,7 +448,7 @@ function removeDepartment() {
 }
 
 function removeEmployee() {
-    connection.query("SELECT * FROM employees_tbl", (err, res) => {
+    connection.query("SELECT * FROM employees", (err, res) => {
         if (err) throw err;
         console.log("");
         console.table(res);
@@ -463,7 +463,7 @@ function removeEmployee() {
         ])
         .then((data) => {
             connection.query(
-                "DELETE FROM employees_tbl WHERE ?",
+                "DELETE FROM employees WHERE ?",
                 { id: data.removeEmp },
                 (err, res) => {
                     if (err) throw err;
